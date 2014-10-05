@@ -36,7 +36,7 @@ func BuildPayload(channel, username, icon_url, icon_emoji, text string) *bytes.R
 }
 
 
-func Post(subdomain, token string, payload *bytes.Reader) {
+func Post(subdomain, token string, payload *bytes.Reader) string {
         url := fmt.Sprintf("https://%s.slack.com/services/hooks/incoming-webhook?token=%s", subdomain, token)
         resp, err := http.Post(url, "application/json", payload)
         defer resp.Body.Close()
@@ -50,5 +50,5 @@ func Post(subdomain, token string, payload *bytes.Reader) {
                 panic(err)
         }
 
-        fmt.Printf("%s\n", string(body))
+        return string(body)
 }
